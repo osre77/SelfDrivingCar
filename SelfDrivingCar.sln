@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SelfDrivingCar.Core", "source\SelfDrivingCar.Core\SelfDrivingCar.Core.csproj", "{8B237BA2-0EBD-4F7A-B41B-A02F1309A8AD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SelfDrivingCar.Wpf", "source\SelfDrivingCar.Wpf\SelfDrivingCar.Wpf.csproj", "{C9757697-A868-4588-A80A-AA3847682572}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B2759419-3AFE-4A15-A989-722CB145FA33}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8B237BA2-0EBD-4F7A-B41B-A02F1309A8AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B237BA2-0EBD-4F7A-B41B-A02F1309A8AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B237BA2-0EBD-4F7A-B41B-A02F1309A8AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B237BA2-0EBD-4F7A-B41B-A02F1309A8AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9757697-A868-4588-A80A-AA3847682572}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9757697-A868-4588-A80A-AA3847682572}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9757697-A868-4588-A80A-AA3847682572}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9757697-A868-4588-A80A-AA3847682572}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {142897E2-C014-46BF-9AC5-AF08DBC6E5F1}
+	EndGlobalSection
+EndGlobal
