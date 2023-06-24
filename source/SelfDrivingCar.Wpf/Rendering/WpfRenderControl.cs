@@ -1,5 +1,4 @@
 ﻿using SelfDrivingCar.Core;
-using System;
 using System.Numerics;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,8 +17,8 @@ public class WpfRenderControl : Control
     private double _zoomFactor = 20d;
     private EntityGraph? _entityGraph;
     private int[] _activeLayers = Array.Empty<int>();
-    private Point _origin = new Point(0.5, 0.7);
-    private Point _offset = new Point(0d, 0d);
+    private Point _origin = new(0.5, 0.7);
+    private Point _offset = new(0d, 0d);
 
     public WpfRenderControl()
     {

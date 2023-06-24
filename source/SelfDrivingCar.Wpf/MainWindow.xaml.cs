@@ -3,9 +3,7 @@ using SelfDrivingCar.Core.Colliders;
 using SelfDrivingCar.Core.Controller;
 using SelfDrivingCar.Core.Extensions;
 using SelfDrivingCar.Core.Rendering;
-using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Numerics;
 using System.Windows;
 using DrawingColor = System.Drawing.Color;
@@ -63,10 +61,7 @@ public partial class MainWindow
 
     private void CleanUp()
     {
-        if (EntityGraph != null)
-        {
-            EntityGraph.StopSimulation();
-        }
+        EntityGraph?.StopSimulation();
 
         EntityGraph = null;
         _carController = null;

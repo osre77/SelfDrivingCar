@@ -30,7 +30,7 @@ This is a 100% experimental project to learn neuronal networks and have fun with
 - Training mode
 - Testing mode
 - Experiment with different sensor arangements and scoring methods
-- Alternative implementations using a library with ready to use noronal networks 
+- Alternative implementations using a library with ready to use neuronal networks 
 - Blazor web implementation
 - Manual control with gamepad
 - Nicer car rendering

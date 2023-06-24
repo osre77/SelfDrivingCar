@@ -31,9 +31,9 @@ public abstract class BaseCollider : Component
 
     public virtual bool CheckPolygonCollision(IList<Vector2> polygon)
     {
-        foreach (var line in GetLineGeometry())
+        foreach (var (start, end, infinite) in GetLineGeometry())
         {
-            if (CarMath.CheckPolygonIntersection(polygon, line.start, line.end, line.infinite)) return true;
+            if (CarMath.CheckPolygonIntersection(polygon, start, end, infinite)) return true;
         }
 
         foreach (var geometry in GetPolyGeometry())
