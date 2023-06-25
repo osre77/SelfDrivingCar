@@ -1,19 +1,34 @@
-﻿using SelfDrivingCar.Core.Controller;
+﻿using SelfDrivingCar.Core.Parameters;
 using SelfDrivingCar.Core.Utils;
 using System.Drawing;
-using System.Numerics;
 
 namespace SelfDrivingCar.Core.Rendering;
 
-public class RoadRenderer : BaseRenderer
+/// <summary>
+/// Renders the appearance of the Road.
+/// </summary>
+[PublicAPI]
+public class RoadRenderer : IRenderer
 {
-    public RoadRenderer(int layer) : base(layer)
+    /// <inheritdoc />
+    public Entity? Entity { get; set; }
+
+    /// <inheritdoc />
+    public int Layer { get; }
+
+    /// <summary>
+    /// Creates a new instance of the renderer.
+    /// </summary>
+    /// <param name="layer">The layer this render should draw on.</param>
+    public RoadRenderer(int layer)
     {
+        Layer = layer;
     }
 
-    public override void Render(RenderContext context, Vector4 viewport, float zoomFactor)
+    /// <inheritdoc />
+    public void Render(RenderContext context, Vector4 viewport, float zoomFactor)
     {
-        var controller = Entity?.GetController<RoadController>();
+        var controller = Entity?.GetParameterSet<RoadParameterSet>();
         if (controller == null) return;
 
         float bottom = (float)Math.Round((viewport.Y - 2) / 2) * 2;

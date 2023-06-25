@@ -1,6 +1,5 @@
 ﻿using SelfDrivingCar.Core.Sensors;
 using SelfDrivingCar.Core.Utils;
-using System.Numerics;
 
 namespace SelfDrivingCar.Core.Extensions;
 

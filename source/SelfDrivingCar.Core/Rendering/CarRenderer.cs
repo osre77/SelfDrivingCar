@@ -1,27 +1,44 @@
-﻿using SelfDrivingCar.Core.Colliders;
-using SelfDrivingCar.Core.Controller;
+﻿using SelfDrivingCar.Core.Controller;
+using SelfDrivingCar.Core.Parameters;
 using System.Drawing;
-using System.Numerics;
 
 namespace SelfDrivingCar.Core.Rendering;
 
-public class CarRenderer : BaseRenderer
+/// <summary>
+/// Renders the appearance of a car.
+/// </summary>
+[PublicAPI]
+public class CarRenderer : IRenderer
 {
     private readonly Color _color;
+    private CarParameterSet? _carParameters;
 
-    public CarRenderer(int layer, Color color) : base(layer)
+    /// <inheritdoc />
+    public Entity? Entity { get; set; }
+
+    /// <inheritdoc />
+    public int Layer { get; }
+
+    /// <summary>
+    /// Creates a new instance of the renderer.
+    /// </summary>
+    /// <param name="layer">The layer this render should draw on.</param>
+    /// <param name="color">The color of the car.</param>
+    public CarRenderer(int layer, Color color)
     {
+        Layer = layer;
         _color = color;
     }
 
-    public override void Render(RenderContext context, Vector4 viewport, float zoomFactor)
+    /// <inheritdoc />
+    public void Render(RenderContext context, Vector4 viewport, float zoomFactor)
     {
         if (Entity == null) return;
-        var carCollider = Entity.GetCollider<CarCollider>();
-        if (carCollider == null) return;
+        _carParameters ??= Entity.GetParameterSet<CarParameterSet>();
+        if (_carParameters == null) return;
 
         bool isDead = Entity.GetController<CarPhysicsController>()?.IsDead == true;
 
-        context.DrawPolygon(carCollider.GetPolyGeometry().First(), null, 0f, null, isDead ? Color.Gray : _color);
+        context.DrawRectangle(Entity.Position, _carParameters.Width, _carParameters.Length, Entity.Angle, null, 0f, null, isDead ? Color.Gray : _color);
     }
 }

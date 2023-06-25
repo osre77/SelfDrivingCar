@@ -1,18 +1,42 @@
 ﻿namespace SelfDrivingCar.Core.Controller;
 
-public class KeyboardCarInputController : CarInputController
+/// <summary>
+/// Car controller for manually controlling a car with keyboard.
+/// </summary>
+[PublicAPI]
+public class KeyboardCarInputController : ICarInputController
 {
     private readonly GetInputCallback _getInputCallback;
 
+    /// <inheritdoc />
+    public Entity? Entity { get; set; }
 
+    /// <inheritdoc />
+    public float Throttle { get; set; }
+
+    /// <inheritdoc />
+    public float SteeringInput { get; set; }
+
+    /// <summary>
+    /// Delegate for a keyboard input callback.
+    /// </summary>
+    /// <param name="accelerate">Must beset to true if the accelerate key is currently down.</param>
+    /// <param name="decelerate">Must beset to true if the decelerate key is currently down.</param>
+    /// <param name="steerLeft">Must beset to true if the steer left key is currently down.</param>
+    /// <param name="steerRight">Must beset to true if the steer right key is currently down.</param>
     public delegate void GetInputCallback(out bool accelerate, out bool decelerate, out bool steerLeft, out bool steerRight);
 
+    /// <summary>
+    /// Creates a new instance of the controller.
+    /// </summary>
+    /// <param name="getInputCallback">Callback for getting the keyboard inputs.</param>
     public KeyboardCarInputController(GetInputCallback getInputCallback)
     {
         _getInputCallback = getInputCallback;
     }
 
-    public override void Simulate(double simulationTime, double timeDelta)
+    /// <inheritdoc />
+    public void Simulate(double simulationTime, double timeDelta)
     {
         Throttle = 0f;
         SteeringInput = 0f;

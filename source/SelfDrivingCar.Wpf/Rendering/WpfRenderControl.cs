@@ -1,8 +1,8 @@
-﻿using System.Numerics;
+﻿using SelfDrivingCar.Core.Rendering;
+using System.Numerics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using SelfDrivingCar.Core.Rendering;
 
 namespace SelfDrivingCar.Wpf.Rendering;
 

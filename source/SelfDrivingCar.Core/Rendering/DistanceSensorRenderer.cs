@@ -1,15 +1,31 @@
 ﻿using SelfDrivingCar.Core.Sensors;
 using System.Drawing;
-using System.Numerics;
 
 namespace SelfDrivingCar.Core.Rendering;
 
-public class DistanceSensorRenderer : BaseRenderer
+/// <summary>
+/// Renders the debug visualization of the <see cref="DistanceSensor"/> component.
+/// </summary>
+[PublicAPI]
+public class DistanceSensorRenderer : IRenderer
 {
-    public DistanceSensorRenderer(int layer) : base(layer)
-    { }
+    /// <inheritdoc />
+    public Entity? Entity { get; set; }
 
-    public override void Render(RenderContext context, Vector4 viewport, float zoomFactor)
+    /// <inheritdoc />
+    public int Layer { get; }
+
+    /// <summary>
+    /// Creates a new instance of the renderer.
+    /// </summary>
+    /// <param name="layer">The layer this render should draw on.</param>
+    public DistanceSensorRenderer(int layer)
+    {
+        Layer = layer;
+    }
+
+    /// <inheritdoc />
+    public void Render(RenderContext context, Vector4 viewport, float zoomFactor)
     {
         if (Entity == null) return;
 

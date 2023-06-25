@@ -1,25 +1,31 @@
-﻿using SelfDrivingCar.Core.Utils;
-using System.Numerics;
+﻿using SelfDrivingCar.Core.Parameters;
+using SelfDrivingCar.Core.Utils;
 
 namespace SelfDrivingCar.Core.Colliders;
 
+/// <summary>
+/// Collider for a car <see cref="Entity"/>.
+/// </summary>
+[PublicAPI]
 public class CarCollider : BaseCollider
 {
-    public float Width { get; set; } = 1.8f;
+    private CarParameterSet? _carParameters;
 
-    public float Length { get; set; } = 4f;
-
+    /// <inheritdoc />
     public override IEnumerable<(Vector2 start, Vector2 end, bool infinite)> GetLineGeometry()
     {
         yield break;
     }
 
-    public override IEnumerable<IList<Vector2>> GetPolyGeometry()
+    /// <inheritdoc />
+    public override IEnumerable<IList<Vector2>> GetPolygonGeometry()
     {
         if (Entity == null) yield break;
+        _carParameters ??= Entity.GetParameterSet<CarParameterSet>();
+        if (_carParameters == null) yield break;
 
-        float w2 = Width / 2;
-        float l2 = Length / 2;
+        float w2 = _carParameters.Width / 2;
+        float l2 = _carParameters.Length / 2;
         float r = (float)Math.Sqrt(w2 * w2 + l2 * l2);
         float a = (float)Math.Atan2(w2, l2);
 

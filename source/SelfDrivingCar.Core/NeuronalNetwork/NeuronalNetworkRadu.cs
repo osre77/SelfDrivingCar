@@ -8,10 +8,19 @@ namespace SelfDrivingCar.Core.NeuronalNetwork;
 /// <remarks>
 /// This is a C# port of the neuronal network created by Radu Mariescu-Istodor for the self-driving car project on www.radufromfinland.com.
 /// </remarks>
+[PublicAPI]
 public class NeuronalNetworkRadu
 {
+    /// <summary>
+    /// Gets the levels of the network.
+    /// </summary>
     public Level[] Levels { get; }
 
+    /// <summary>
+    /// Create anew instance of a neuronal network.
+    /// </summary>
+    /// <param name="neuronCounts">Array with number of neurons in each layer.</param>
+    /// <remarks>The number of layers will be 1 less then the number of layers provided in <paramref name="neuronCounts"/>.</remarks>
     public NeuronalNetworkRadu(int[] neuronCounts)
     {
         Levels = new Level[neuronCounts.Length - 1];
@@ -21,7 +30,12 @@ public class NeuronalNetworkRadu
         }
     }
 
-    public double[] FeedForward(IEnumerable <double> givenInputs)
+    /// <summary>
+    /// Calculate new output values by feeding forward new input values.
+    /// </summary>
+    /// <param name="givenInputs">Array of new input values.</param>
+    /// <returns>Returns the values of the network outputs.</returns>
+    public double[] FeedForward(IEnumerable<double> givenInputs)
     {
         var inputValues = givenInputs.ToArray();
         var outputs = Levels[0].FeedForward(inputValues);
@@ -33,6 +47,10 @@ public class NeuronalNetworkRadu
         return outputs;
     }
 
+    /// <summary>
+    /// Mutate the current weights and biases of the network.
+    /// </summary>
+    /// <param name="amount">The amount by which the weights and biases are allowed to be muted at max as a value between 0 and 1.</param>
     public void Mutate(double amount = 1d)
     {
         foreach (var level in Levels)
@@ -41,16 +59,39 @@ public class NeuronalNetworkRadu
         }
     }
 
+    /// <summary>
+    /// A level of the network.
+    /// </summary>
+    /// <remarks>
+    /// A level is a set of input and output neurons connected by weights.
+    /// </remarks>
     public class Level
     {
+        /// <summary>
+        /// Gets the input values.
+        /// </summary>
         public double[] Inputs { get; }
 
+        /// <summary>
+        /// Gets the output values.
+        /// </summary>
         public double[] Outputs { get; }
 
+        /// <summary>
+        /// Gets the biases of the outputs.
+        /// </summary>
         public double[] Biases { get; }
 
+        /// <summary>
+        /// Gets the weights of the neuron connections.
+        /// </summary>
         public double[][] Weights { get; }
 
+        /// <summary>
+        /// Creates a new level.
+        /// </summary>
+        /// <param name="inputCount">Number of input neurons.</param>
+        /// <param name="outputCount">Number of output neurons.</param>
         public Level(int inputCount, int outputCount)
         {
             Inputs = new double[inputCount];
@@ -66,6 +107,11 @@ public class NeuronalNetworkRadu
             Randomize();
         }
 
+        /// <summary>
+        /// Calculate new output values by feeding forward new input values.
+        /// </summary>
+        /// <param name="givenInputs">Array of new input values.</param>
+        /// <returns>Returns the values of the level outputs.</returns>
         public double[] FeedForward(double[] givenInputs)
         {
             for (int i = 0; i < Inputs.Length && i < givenInputs.Length; i++)
@@ -94,6 +140,10 @@ public class NeuronalNetworkRadu
             return Outputs;
         }
 
+        /// <summary>
+        /// Mutate the current weights and biases of the level.
+        /// </summary>
+        /// <param name="amount">The amount by which the weights and biases are allowed to be muted at max as a value between 0 and 1.</param>
         public void Mutate(double amount)
         {
             var random = new Random();

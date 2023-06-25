@@ -1,9 +1,17 @@
 ﻿namespace SelfDrivingCar.Core.Controller;
 
-public class CarScoreController : BaseController
+/// <summary>
+/// Controller to compute the score of the car.
+/// </summary>
+[PublicAPI]
+public class CarScoreController : IController
 {
-    public override void Simulate(double simulationTime, double timeDelta)
-    {
+    /// <inheritdoc />
+    public Entity? Entity { get; set; }
 
+    /// <inheritdoc />
+    public void Simulate(double simulationTime, double timeDelta)
+    {
+        // TODO: implement scoring.
     }
 }

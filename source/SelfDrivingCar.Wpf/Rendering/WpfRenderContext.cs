@@ -71,27 +71,6 @@ public class WpfRenderContext : RenderContext
         }
     }
 
-    public override void PushRotateTransform(float angle, Vector2 center)
-    {
-        if (DrawingContext == null) return;
-
-        DrawingContext.PushTransform(new RotateTransform(angle / Math.PI * 180d, center.X, center.Y));
-    }
-
-    public override void PushTranslateTransform(Vector2 offset)
-    {
-        if (DrawingContext == null) return;
-
-        DrawingContext.PushTransform(new TranslateTransform(offset.X, offset.Y));
-    }
-
-    public override void Pop()
-    {
-        if (DrawingContext == null) return;
-
-        DrawingContext.Pop();
-    }
-
     public DrawingContext? DrawingContext { get; set; }
 
     public static Pen? GetPen(DrawingColor? color, float thickness, float[]? dashStyle)

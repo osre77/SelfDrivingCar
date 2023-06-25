@@ -3,10 +3,30 @@ using SelfDrivingCar.Core.Sensors;
 
 namespace SelfDrivingCar.Core.Controller;
 
-public class NeuronalNetworkRaduInputController : CarInputController
+/// <summary>
+/// Controller with a simple neuronal network based on code by Radu from Finland.
+/// </summary>
+[PublicAPI]
+public class NeuronalNetworkRaduInputController : ICarInputController
 {
+    /// <inheritdoc />
+    public Entity? Entity { get; set; }
+
+    /// <inheritdoc />
+    public float Throttle { get; set; }
+
+    /// <inheritdoc />
+    public float SteeringInput { get; set; }
+
+    /// <summary>
+    /// Gets the neuronal network.
+    /// </summary>
     public NeuronalNetworkRadu NeuronalNetwork { get; }
 
+    /// <summary>
+    /// Creates a new instance of the controller.
+    /// </summary>
+    /// <param name="sensorCount">Number of input sensors.</param>
     public NeuronalNetworkRaduInputController(int sensorCount)
     {
         NeuronalNetwork = new NeuronalNetworkRadu(new[]
@@ -17,10 +37,11 @@ public class NeuronalNetworkRaduInputController : CarInputController
         });
     }
 
-    public override void Simulate(double simulationTime, double timeDelta)
+    /// <inheritdoc />
+    public void Simulate(double simulationTime, double timeDelta)
     {
         if (Entity == null) return;
-        var sensors = Entity.GetSensors<BaseSensor>();
+        var sensors = Entity.GetSensors<ISensor>();
 
         var outputs = NeuronalNetwork.FeedForward(sensors.Select(s => (double)s.NormalizedValue));
         if (outputs.Length >= 4)

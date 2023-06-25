@@ -1,7 +1,6 @@
-﻿using System.Drawing;
-using System.Numerics;
-using SelfDrivingCar.Core.Rendering;
+﻿using SelfDrivingCar.Core.Rendering;
 using SelfDrivingCar.Core.Utils;
+using System.Drawing;
 
 namespace SelfDrivingCar.Core.NeuronalNetwork;
 
@@ -11,9 +10,23 @@ namespace SelfDrivingCar.Core.NeuronalNetwork;
 /// <remarks>
 /// This is a C# port of the neuronal network visualizer created by Radu Mariescu-Istodor for the self-driving car project on www.radufromfinland.com.
 /// </remarks>
+[PublicAPI]
 public class NeuronalNetworkRaduRenderer
 {
-    public void Render(NeuronalNetworkRadu network, RenderContext context, Vector4 viewport, float zoomLevel)
+    ///  <summary>
+    ///  Renders the neuronal network.
+    ///  </summary>
+    ///  <param name="network">The neuronal network to render.</param>
+    ///  <param name="context">The context to render to.</param>
+    ///  <param name="viewport">The current visible viewport.</param>
+    ///  <param name="zoomFactor">The current zoom factor.</param>
+    ///  <remarks>
+    ///  The coordinate system has X from left to right and Y from bottom to top.
+    ///  The <paramref name="viewport"/> can be used to cull the rendering.
+    ///  The <paramref name="zoomFactor"/> can be used to draw elements independent of the current zoom factor.
+    /// e.g. to draw a line at 3 pixels width independent of the current zoom factor set the stroke thickness to <code>3f / zoomFactor</code>.
+    ///  </remarks>
+    public void Render(NeuronalNetworkRadu network, RenderContext context, Vector4 viewport, float zoomFactor)
     {
         float height = (viewport.W - viewport.Y);
         float width = (viewport.Z - viewport.X);
@@ -56,7 +69,7 @@ public class NeuronalNetworkRaduRenderer
                     context.DrawLine(
                         new Vector2(GetX(i, inputCount), GetY(l)),
                         new Vector2(GetX(o, outputCount), GetY(l + 1)),
-                        color, 2f / zoomLevel, new[] { 7f, 3f });
+                        color, 2f / zoomFactor, new[] { 7f, 3f });
                 }
             }
         }
@@ -71,7 +84,7 @@ public class NeuronalNetworkRaduRenderer
                 var color = GetColor(value);
 
                 context.DrawEllipse(new Vector2(GetX(i, inputCount), GetY(0)), neuronSize * 1.1f, neuronSize * 1.1f,
-                    Color.DimGray, 1f / zoomLevel, null, Color.Black);
+                    Color.DimGray, 1f / zoomFactor, null, Color.Black);
 
                 context.DrawEllipse(new Vector2(GetX(i, inputCount), GetY(0)), neuronSize, neuronSize,
                     null, 0f, null, color);
@@ -91,13 +104,13 @@ public class NeuronalNetworkRaduRenderer
                 var biasColor = GetColor(bias);
 
                 context.DrawEllipse(new Vector2(GetX(o, outputCount), GetY(l + 1)), neuronSize * 1.1f, neuronSize * 1.1f,
-                    Color.DimGray, 1f / zoomLevel, null, Color.Black);
+                    Color.DimGray, 1f / zoomFactor, null, Color.Black);
 
                 context.DrawEllipse(new Vector2(GetX(o, outputCount), GetY(l + 1)), neuronSize, neuronSize,
                     null, 0f, null, valueColor);
 
                 context.DrawEllipse(new Vector2(GetX(o, outputCount), GetY(l + 1)), neuronSize * 1.1f, neuronSize * 1.1f,
-                    biasColor, 2f / zoomLevel, new []{3f, 3f}, null);
+                    biasColor, 2f / zoomFactor, new[] { 3f, 3f }, null);
             }
         }
     }

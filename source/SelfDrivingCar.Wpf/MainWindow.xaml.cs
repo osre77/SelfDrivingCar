@@ -2,6 +2,7 @@
 using SelfDrivingCar.Core.Colliders;
 using SelfDrivingCar.Core.Controller;
 using SelfDrivingCar.Core.Extensions;
+using SelfDrivingCar.Core.Parameters;
 using SelfDrivingCar.Core.Rendering;
 using System.ComponentModel;
 using System.Numerics;
@@ -17,7 +18,7 @@ public partial class MainWindow
 {
     private CarPhysicsController? _carController;
     private Entity? _heroCar;
-    private RoadController? _roadController;
+    private RoadParameterSet? _roadParameters;
     private NeuronalNetworkRaduInputController? _neuronalNetworkController;
     private int _exceptionCount;
 
@@ -68,7 +69,7 @@ public partial class MainWindow
         EntityGraph = null;
         _carController = null;
         _heroCar = null;
-        _roadController = null;
+        _roadParameters = null;
         _exceptionCount = 0;
     }
 
@@ -79,12 +80,13 @@ public partial class MainWindow
         EntityGraph = new EntityGraph();
         EntityGraph.Add(new Entity()
             .WithCollider(new RoadCollider())
-            .WithController(_roadController = new RoadController(3, 3f))
+            .WithParameterSet(_roadParameters = new RoadParameterSet(3, 3f))
             .WithRenderer(new RoadRenderer(0)));
 
         AddTrafficCar(0, 10f);
 
         EntityGraph.Add(_heroCar = new Entity()
+            .WithParameterSet(new CarParameterSet())
             .WithCollider(new CarCollider())
             .WithCarSensorPattern1(out var sensorCount)
             //.WithController(new KeyboardCarInputController(RenderControl.GetInput))
@@ -108,9 +110,10 @@ public partial class MainWindow
 
     private void AddTrafficCar(int lane, float position)
     {
-        if (_roadController == null) return;
+        if (_roadParameters == null) return;
 
-        EntityGraph?.Add(new Entity(new Vector2(_roadController.GetLanePosition(lane), position), 0f)
+        EntityGraph?.Add(new Entity(new Vector2(_roadParameters.GetLanePosition(lane), position), 0f)
+            .WithParameterSet(new CarParameterSet())
             .WithCollider(new CarCollider())
             .WithController(new CarCruiseController(10f))
             .WithRenderer(new CarRenderer(1, DrawingColor.Red)));
@@ -139,11 +142,15 @@ public partial class MainWindow
             $"Alive cars: {aliveCars}\n" +
             "\n" +
             $"Throttle: {_carController.Throttle:F2}\n" +
-            $"Acc:      {_carController.Acceleration:F2}px/s²\n" +
-            $"Speed:    {_carController.CurrentSpeed:F2}px/s\n" +
+            $"Acc:      {_carController.Acceleration:F2}m/s²\n" +
+            $"Speed:    {_carController.CurrentSpeed:F2}m/s\n" +
             $"Steering: {_carController.SteeringInput:F2}\n" +
             $"Position: {_carController.Entity?.Position.X ?? 0d:F2}; {_carController.Entity?.Position.Y ?? 0d:F2}\n" +
             $"Angle:    {(_carController.Entity?.Angle ?? 0d) / Math.PI * 180d:F1}°\n" +
+            $"IsDead:   {_carController.IsDead} ({_carController.TimeOfDeath:F1}s)\n" +
+            $"Dist. traveled: {_carController.DistanceTraveled:F2}m\n" +
+            $"Dist moved:     {_carController.DistanceMoved:F2}m\n" +
+            $"Avg. speed:     {_carController.AverageSpeed:F2}m/s" +
             $"{exMessage}");
 
         if (aliveCars == 0)
