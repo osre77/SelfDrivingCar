@@ -42,6 +42,15 @@ public class WpfRenderContext : RenderContext
             }));
     }
 
+    public override void DrawEllipse(Vector2 center, float width, float height, DrawingColor? strokeColor, float strokeThickness,
+        float[]? dashStyle, DrawingColor? fillColor)
+    {
+        if (DrawingContext == null) return;
+
+        DrawingContext.DrawEllipse(GetBrush(fillColor), GetPen(strokeColor, strokeThickness, dashStyle),
+            GetPoint(center), width / 2d, height / 2d);
+    }
+
     public override void DrawText(Vector2 position, string text, DrawingColor color, float size, string fontName, bool bold = false, bool italic = false)
     {
         if (DrawingContext == null) return;
@@ -54,7 +63,7 @@ public class WpfRenderContext : RenderContext
                     italic ? FontStyles.Italic : FontStyles.Normal,
                     bold ? FontWeights.Bold : FontWeights.Normal,
                     FontStretches.Normal), size, GetBrush(color),
-                1), GetPoint(position));
+                PixelsPerDip), GetPoint(position));
         }
         finally
         {

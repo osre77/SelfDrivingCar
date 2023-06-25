@@ -52,6 +52,18 @@
                FontFamily="Courier new"
                HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"/>
     </Grid>
-    <rendering:WpfRenderControl Background="DarkGreen" x:Name="RenderControl" x:FieldModifier="private"/>
+
+    <rendering:WpfEntityGraphRenderControl DockPanel.Dock="Left" Width="350"
+                                           Background="DarkGreen" x:Name="RenderControl" x:FieldModifier="private"/>
+
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+
+      <rendering:WpfNeuronalNetworkRaduRenderControl x:Name="NetworkRenderControl" x:FieldModifier="private"
+                                                     Background="Black"/>
+    </Grid>
   </DockPanel>
 </Window>

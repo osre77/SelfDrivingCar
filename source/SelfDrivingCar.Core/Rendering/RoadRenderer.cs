@@ -16,10 +16,10 @@ public class RoadRenderer : BaseRenderer
         var controller = Entity?.GetController<RoadController>();
         if (controller == null) return;
 
-        float top = (float)Math.Round((viewport.Y + 2) / 2) * 2;
-        float bottom = (float)Math.Round((viewport.W - 2) / 2) * 2;
+        float bottom = (float)Math.Round((viewport.Y - 2) / 2) * 2;
+        float top = (float)Math.Round((viewport.W + 2) / 2) * 2;
 
-        context.DrawRectangle(new Vector2(0f, CarMath.Lerp(top, bottom, 0.5f)), controller.LaneWidth * controller.LaneCount * 1.1f, top - bottom, null, 0f, null, Color.DimGray);
+        context.DrawRectangle(new Vector2(0f, CarMath.Lerp(bottom, top, 0.5f)), controller.LaneWidth * controller.LaneCount * 1.1f, top - bottom, null, 0f, null, Color.DimGray);
         context.DrawLine(
             new Vector2(controller.LeftBorder, top),
             new Vector2(controller.LeftBorder, bottom),

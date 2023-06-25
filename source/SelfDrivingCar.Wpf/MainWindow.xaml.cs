@@ -18,6 +18,8 @@ public partial class MainWindow
     private CarPhysicsController? _carController;
     private Entity? _heroCar;
     private RoadController? _roadController;
+    private NeuronalNetworkRaduInputController? _neuronalNetworkController;
+    private int _exceptionCount;
 
     public EntityGraph? EntityGraph { get; set; }
 
@@ -84,15 +86,19 @@ public partial class MainWindow
 
         EntityGraph.Add(_heroCar = new Entity()
             .WithCollider(new CarCollider())
-            .WithController(new KeyboardCarInputController(RenderControl.GetInput))
+            .WithCarSensorPattern1(out var sensorCount)
+            //.WithController(new KeyboardCarInputController(RenderControl.GetInput))
+            .WithController(_neuronalNetworkController = new NeuronalNetworkRaduInputController(sensorCount))
             .WithController(_carController = new CarPhysicsController())
-            .WithCarSensorPattern1()
             .WithRenderer(new CarRenderer(2, DrawingColor.Blue))
             .WithRenderer(new DistanceSensorRenderer(3)));
 
         RenderControl.EntityGraph = EntityGraph;
         RenderControl.ActiveLayers = new[] { 0, 1, 2, 3 };
         RenderControl.Offset = new Point(0d, _heroCar.Position.Y);
+
+        NetworkRenderControl.NeuronalNetwork = _neuronalNetworkController.NeuronalNetwork;
+        NetworkRenderControl.Refresh();
 
         StaticOutput.Clear();
         LogOutput.Clear();
@@ -110,14 +116,14 @@ public partial class MainWindow
             .WithRenderer(new CarRenderer(1, DrawingColor.Red)));
     }
 
-    private int _exceptionCount;
-
     private void EntityGraphOnFrameSimulated(object? sender, FrameSimulatedEventArgs e)
     {
         if (_heroCar == null || _carController == null || EntityGraph == null) return;
 
         RenderControl.Offset = new Point(0d, _heroCar.Position.Y);
         RenderControl.Refresh();
+
+        NetworkRenderControl.Refresh();
 
         string exMessage = string.Empty;
         if (e.FrameException != null)

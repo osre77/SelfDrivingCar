@@ -11,6 +11,11 @@ public static class CarMath
         return a + (b - a) * t;
     }
 
+    public static double Lerp(double a, double b, double t)
+    {
+        return a + (b - a) * t;
+    }
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Vector2 GetCirclePoint(float radius, float angle)
     {
@@ -49,7 +54,7 @@ public static class CarMath
 
     public static Vector2? IntersectLines(Vector2 startA, Vector2 endA, bool infiniteA, Vector2 startB, Vector2 endB, bool infiniteB, out float positionA, out float positionB)
     {
-        // Original js code from www.radufromfinland.com self driving car
+        // Original js code from www.radufromfinland.com self-driving car
         //function getIntersection(A, B, C, D)
         //{
         //    const tTop= (D.x - C.x) * (A.y - C.y) - (D.y - C.y) * (A.x - C.x);
@@ -94,7 +99,7 @@ public static class CarMath
 
     public static bool CheckPolygonIntersection(IList<Vector2> polygonA, IList<Vector2> polygonB)
     {
-        // Original js code from www.radufromfinland.com self driving car
+        // Original js code from www.radufromfinland.com self-driving car
         //function polysIntersect(poly1, poly2)
         //{
         //    for (let i = 0; i < poly1.length; i++)

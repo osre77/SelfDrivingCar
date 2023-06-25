@@ -47,6 +47,9 @@ public abstract class RenderContext
     public abstract void DrawPolyLine(IEnumerable<Vector2> path, Color? strokeColor,
         float strokeThickness, float[]? dashStyle, bool close);
 
+    public abstract void DrawEllipse(Vector2 center, float width, float height, Color? strokeColor,
+        float strokeThickness, float[]? dashStyle, Color? fillColor);
+
     public abstract void DrawText(Vector2 position, string text, Color color, float size, string fontName, bool bold = false, bool italic = false);
 
     public abstract void PushRotateTransform(float angle, Vector2 center);
