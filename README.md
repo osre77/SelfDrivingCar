@@ -23,10 +23,10 @@ This is a 100% experimental project to learn neuronal networks and have fun with
 - Manual driving with keyboard
 - Collisions
 - WPF client
+- Port original neuronal network
  
 ### Planned features
 - Spawning and despawning traffic
-- Port original neuronal network
 - Training mode
 - Testing mode
 - Experiment with different sensor arangements and scoring methods
